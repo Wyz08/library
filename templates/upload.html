@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CSV</title>
+</head>
+<body>
+    <h1>Upload File CSV</h1>
+
+    <!-- 🟥 TAMPILKAN PESAN ERROR JIKA ADA -->
+    {% if error %}
+        <div style="color: red; font-weight: bold;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <input type="submit" value="Upload">
+    </form>
+
+    <br>
+
+    <!-- ✅ TAMPILKAN HASIL ER -->
+    {% if er_data %}
+        <h2>Hasil Engagement Rate</h2>
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>ER (%)</th>
+            </tr>
+            {% for row in er_data %}
+            <tr>
+                <td>{{ row['username'] }}</td>
+                <td>{{ "%.2f"|format(row['ER']) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <br>
+        <a href="/download/csv"><button>Download CSV</button></a>
+        <a href="/download/excel"><button>Download Excel</button></a>
+    {% endif %}
+</body>
+</html>
